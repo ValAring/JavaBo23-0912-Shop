@@ -14,6 +14,7 @@ class ShopServiceTest {
 
         //WHEN
         Order actual = shopService.addOrder(productsIds);
+        System.out.println(actual);
 
         //THEN
         Order expected = new Order("-1", List.of(new Product("1", "Apfel")));
@@ -32,5 +33,21 @@ class ShopServiceTest {
 
         //THEN
         assertNull(actual);
+    }
+
+    @Test
+    void listOrdersWithSpecificOrderStatus(){
+        //GIVEN
+        ShopService shopService = new ShopService();
+        List<String> productsIds = List.of("1");
+        Order myOrder1 = shopService.addOrder(productsIds);
+        Order myOrder2 = shopService.addOrder(productsIds);
+
+        //WHEN
+        List<Order> actual = shopService.listOrdersWithState(OrderStatus.PROCESSING);
+        System.out.println(actual);
+
+        //THEN
+        assertNotNull(actual);
     }
 }
