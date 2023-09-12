@@ -23,7 +23,14 @@ public class ShopService {
 
         return orderRepo.addOrder(newOrder);
     }
+    public String updateOrder(String id, OrderStatus newOrderState) {
+        Order order = orderRepo.getOrderById(id);
+        if (order==null) return "ID doesn't exist.";
 
+        orderRepo.removeOrder(id);
+        orderRepo.addOrder(order.withOrderStatus(newOrderState));
+        return "Order State Changed";
+    }
     public List<Order> listOrdersWithState(OrderStatus thisState){
         List<Order> allOrders = orderRepo.getOrders();
         return allOrders.stream().filter(order -> order.orderStatus() == thisState).toList();
